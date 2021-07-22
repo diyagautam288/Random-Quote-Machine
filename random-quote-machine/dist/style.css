@@ -1,0 +1,11 @@
+body{
+   background-color:#fff;
+}
+.wrapper{
+  background:linear-gradient(to right, #bdc3c7, #2c3e50);
+  height: 100vh;
+}
+.box{
+  background-color:		#F5F5F5;
+  text-align:center;
+}

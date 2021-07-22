@@ -1,0 +1,54 @@
+const api="https://type.fit/api/quotes";
+class App extends React.Component {
+  state={
+    quotes:[{
+      "text":"",
+      "author":""
+    }],
+    index:0
+  }
+  componentDidMount()
+  {
+    fetch(api).then(res=>res.json()).then(res=>{
+      this.setState({
+        quotes:res
+      },this.getRandomIndex);
+    });
+  }
+  getRandomIndex=()=>
+  {
+    const {quotes}=this.state;
+    if(quotes.length>0)
+      {
+        const ind=Math.floor(Math.random()*quotes.length);
+        this.setState({
+          index:ind
+        });
+      }
+  }
+  render()
+  {
+    const {quotes,index}=this.state;
+    const quote=quotes[index];
+    const turl=`https://twitter.com/intent/tweet?text=${quote.text}-${quote.author}`
+    return (
+      <div className="wrapper align-self-center d-flex justify-content-center">
+        <div className="col-6 box align-self-center p-5 rounded " id="quote-box">
+          {
+            quote && (
+              <div className="mb-5">
+                <p id="text">{quote.text}</p>
+                <p id="author" className="text-right"><i>- {quote.author}</i></p>
+              </div>
+            )
+          }
+          <div className="d-flex justify-content-between">
+            <a id="tweet-quote" className="btn btn-primary" target="_blank" href={turl}><i className="fab fa-twitter"></i></a>
+            <button id="new-quote" className="btn btn-primary" onClick={this.getRandomIndex}>New Quotes</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+ReactDOM.render(<App />,document.getElementById('app'))
